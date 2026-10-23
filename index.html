@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vando's English Journey — Days 1 & 2</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --primary: #2563eb; --primary-dark: #1d4ed8;
+    --success: #16a34a; --success-bg: #dcfce7;
+    --error: #dc2626; --error-bg: #fee2e2;
+    --bg: #f8fafc; --card: #ffffff;
+    --text: #1e293b; --muted: #64748b; --border: #e2e8f0;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.6;
+    padding: 20px; max-width: 900px; margin: 0 auto; padding-bottom: 80px;
+  }
+  
+  .login-overlay {
+    position: fixed; inset: 0; background: var(--bg); z-index: 2000;
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+  }
+  .login-card {
+    background: var(--card); padding: 32px; border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 100%;
+  }
+  .login-card h2 { margin-bottom: 16px; color: var(--primary); }
+  .login-card input {
+    width: 100%; padding: 12px; border: 2px solid var(--border);
+    border-radius: 8px; font-size: 16px; margin-bottom: 16px; text-align: center;
+  }
+
+  .nav-tabs {
+    display: flex; gap: 8px; margin-bottom: 24px; overflow-x: auto;
+    padding-bottom: 8px; position: sticky; top: 0; background: var(--bg); z-index: 100;
+  }
+  .nav-tab {
+    padding: 10px 20px; border-radius: 8px; background: var(--card);
+    border: 1px solid var(--border); font-weight: 600; cursor: pointer;
+    color: var(--muted); transition: all 0.2s; white-space: nowrap;
+  }
+  .nav-tab:hover { background: #e2e8f0; }
+  .nav-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
+  
+  header { margin-bottom: 24px; display: none; }
+  header.active { display: block; }
+  .day-badge {
+    display: inline-block; background: var(--primary); color: white;
+    padding: 4px 12px; border-radius: 999px; font-size: 12px;
+    font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 12px;
+  }
+  h1 { font-size: 28px; margin-bottom: 4px; }
+  .subtitle { color: var(--muted); font-size: 15px; }
+  .progress-box {
+    margin-top: 16px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px;
+  }
+  .progress-box h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 4px; }
+  .progress-hint { font-size: 12px; color: var(--muted); margin-bottom: 12px; font-style: italic; }
+  .progress-items { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .progress-item {
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    padding: 8px; border-radius: 8px; background: #f1f5f9; font-size: 12px; font-weight: 600;
+    border: 2px solid transparent; transition: all 0.3s ease; position: relative;
+  }
+  .progress-item.done { background: var(--success-bg); border-color: var(--success); color: var(--success); }
+  .progress-item.done::after { content: '✓'; position: absolute; top: 4px; right: 6px; font-size: 12px; font-weight: 700; }
+  .progress-item .letter { font-size: 16px; margin-bottom: 2px; }
+
+  .day-content { display: none; }
+  .day-content.active { display: block; animation: fadeIn 0.3s ease; }
+
+  section { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+  section h2 { font-size: 20px; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+  .section-letter {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; background: var(--primary); color: white;
+    border-radius: 8px; font-weight: 700; font-size: 16px;
+  }
+  .section-desc { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+  audio { width: 100%; margin: 12px 0 16px 0; }
+  
+  .questions { margin-top: 16px; }
+  .question { margin-bottom: 16px; padding: 12px; background: #f8fafc; border-left: 3px solid var(--primary); border-radius: 6px; transition: all 0.3s; }
+  .question p { font-weight: 600; margin-bottom: 8px; }
+  .question label { display: block; padding: 6px 8px; margin: 4px 0; cursor: pointer; border-radius: 4px; font-size: 14px; }
+  .question label:hover { background: #e2e8f0; }
+  .question input[type="radio"] { margin-right: 8px; }
+  .question input[type="text"] { width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; font-family: inherit; }
+  .answer-feedback { margin-top: 8px; padding: 8px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; display: none; }
+  .answer-feedback.correct { display: block; background: var(--success-bg); color: var(--success); }
+  .answer-feedback.incorrect { display: block; background: var(--error-bg); color: var(--error); }
+  .question.answered-correct { border-left-color: var(--success); background: #f0fdf4; }
+  .question.answered-incorrect { border-left-color: var(--error); background: #fef2f2; }
+  
+  .reading-text { background: #f8fafc; padding: 16px; border-radius: 8px; margin: 12px 0; border-left: 4px solid var(--primary); line-height: 1.8; }
+  .writing-prompt { background: #eff6ff; padding: 16px; border-radius: 8px; margin: 12px 0; border-left: 4px solid var(--primary); }
+  .writing-prompt strong { display: block; margin-bottom: 6px; }
+  
+  textarea.writing-input {
+    width: 100% !important; min-height: 150px; padding: 12px; border: 1px solid var(--border);
+    border-radius: 8px; font-size: 14px; font-family: inherit; resize: vertical; box-sizing: border-box;
+  }
+  .word-counter { text-align: right; font-size: 12px; color: var(--muted); margin-top: 4px; margin-bottom: 12px; }
+  
+  .teacher-feedback-box {
+    display: none; background: #e0f2fe; border-left: 4px solid #0284c7;
+    padding: 16px; border-radius: 8px; margin-top: 16px; animation: fadeIn 0.3s ease;
+  }
+  .teacher-feedback-box h4 { color: #0369a1; margin-bottom: 8px; font-size: 14px; text-transform: uppercase; }
+  .teacher-feedback-box p { white-space: pre-wrap; font-size: 14px; color: #0c4a6e; }
+
+  .submit-status { margin-top: 12px; padding: 10px 14px; border-radius: 6px; font-size: 14px; display: none; }
+  .submit-status.success { display: block; background: var(--success-bg); color: var(--success); border-left: 3px solid var(--success); }
+  .submit-status.error { display: block; background: var(--error-bg); color: var(--error); border-left: 3px solid var(--error); }
+  
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 12px; }
+  .vocab-card { background: #f8fafc; padding: 14px; border-radius: 8px; border-left: 3px solid var(--primary); transition: background 0.3s; }
+  .vocab-card.listened { background: #f0fdf4; border-left-color: var(--success); }
+  .vocab-card strong { color: var(--primary); font-size: 15px; display: flex; align-items: center; gap: 4px; margin-bottom: 4px; flex-wrap: wrap; }
+  .vocab-card .type { font-size: 12px; color: var(--muted); font-style: italic; font-weight: 400; }
+  .vocab-card .def { font-size: 13px; margin-bottom: 6px; }
+  .vocab-card .example { font-size: 12px; color: #475569; font-style: italic; padding-top: 6px; border-top: 1px dashed #e2e8f0; }
+  .vocab-card .example strong { display: inline; color: #475569; font-style: normal; font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; margin-right: 4px; }
+  .speaker-btn { background: none; border: none; cursor: pointer; font-size: 16px; padding: 4px 6px; border-radius: 6px; transition: all 0.15s; line-height: 1; }
+  .speaker-btn:hover { background: rgba(37,99,235,0.12); }
+  .speaker-btn.playing { transform: scale(1.25); background: rgba(22,163,74,0.15); }
+  .vocab-progress-badge { display: inline-block; padding: 3px 10px; border-radius: 999px; background: #e0e7ff; color: var(--primary); font-size: 12px; font-weight: 600; margin-left: 8px; }
+  
+  .grammar-box { background: #fef9c3; padding: 16px; border-radius: 8px; margin: 12px 0; border-left: 4px solid #eab308; }
+  .grammar-box h4 { font-size: 14px; text-transform: uppercase; color: #a16207; margin-bottom: 8px; letter-spacing: 0.5px; }
+  .grammar-box p, .grammar-box li { font-size: 14px; margin-bottom: 6px; }
+  .grammar-box ul { margin-left: 20px; margin-bottom: 8px; }
+  .grammar-box code { background: rgba(0,0,0,0.05); padding: 1px 5px; border-radius: 3px; font-family: 'Courier New', monospace; font-size: 13px; }
+  
+  .btn { display: inline-block; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s; font-family: inherit; }
+  .btn:hover { background: var(--primary-dark); }
+  .btn:disabled { background: var(--muted); cursor: not-allowed; }
+  .btn-secondary { background: #e2e8f0; color: var(--text); }
+  .btn-secondary:hover { background: #cbd5e1; }
+  
+  .ai-prompt-box { background: #f3e8ff; padding: 16px; border-radius: 8px; margin: 12px 0; border-left: 4px solid #9333ea; }
+  .ai-prompt-box h4 { font-size: 14px; color: #6b21a8; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .ai-prompt-box pre { background: white; padding: 12px; border-radius: 6px; font-size: 12px; white-space: pre-wrap; font-family: 'Courier New', monospace; margin: 8px 0; border: 1px solid #e9d5ff; }
+
+  .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 12px; }
+  .resource-link { display: block; padding: 14px; background: #f8fafc; border-radius: 8px; text-decoration: none; color: var(--text); border-left: 3px solid var(--primary); transition: transform 0.15s; }
+  .resource-link:hover { transform: translateX(3px); background: #f1f5f9; }
+  .resource-link strong { display: block; color: var(--primary); margin-bottom: 2px; }
+  .resource-link span { font-size: 12px; color: var(--muted); }
+
+  .popup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
+  .popup-overlay.active { display: flex; animation: fadeIn 0.25s ease; }
+  .popup-card { background: white; border-radius: 16px; padding: 32px 28px; max-width: 380px; width: 100%; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  .popup-card .emoji { font-size: 48px; margin-bottom: 8px; display: block; }
+  .popup-card h2 { font-size: 22px; margin-bottom: 8px; color: var(--success); }
+  .popup-card p { color: var(--muted); margin-bottom: 20px; font-size: 15px; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes scaleIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  .footer-actions { text-align: center; margin-top: 40px; font-size: 12px; }
+  .btn-text { background: none; border: none; color: var(--muted); cursor: pointer; text-decoration: underline; }
+  .btn-text:hover { color: var(--error); }
+
+  @media (max-width: 600px) {
+    body { padding: 12px; }
+    section { padding: 16px; }
+    h1 { font-size: 22px; }
+    .progress-items { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN MODAL -->
+<div class="login-overlay" id="login-modal" style="display: none;">
+  <div class="login-card">
+    <h2>Welcome!</h2>
+    <p style="margin-bottom: 16px; color: var(--muted);">Please enter your name to start:</p>
+    <input type="text" id="student-name-input" placeholder="Your name...">
+    <button class="btn" onclick="startApp()" style="width: 100%;">Start Learning</button>
+  </div>
+</div>
+
+<!-- NAVIGATION TABS -->
+<div class="nav-tabs" id="nav-tabs" style="display: none;">
+  <button class="nav-tab active" onclick="switchDay(1)">Day 1</button>
+  <button class="nav-tab" onclick="switchDay(2)">Day 2</button>
+</div>
+
+<div id="app-content" style="display: none;">
+  
+  <!-- ============================== DAY 1 ============================== -->
+  <div id="day-1" class="day-content active">
+    <header class="active">
+      <span class="day-badge">Day 1 · A1</span>
+      <h1>Verb to be &amp; Introductions</h1>
+      <p class="subtitle">Focus: am, is, are — talking about yourself and others</p>
+      <div class="progress-box">
+        <h3>Today's Progress</h3>
+        <div class="progress-items" data-day="1">
+          <div class="progress-item" data-section="listening"><span class="letter">L</span> Listening</div>
+          <div class="progress-item" data-section="reading"><span class="letter">R</span> Reading</div>
+          <div class="progress-item" data-section="writing"><span class="letter">W</span> Writing</div>
+          <div class="progress-item" data-section="vocabulary"><span class="letter">V</span> Vocabulary</div>
+          <div class="progress-item" data-section="grammar"><span class="letter">G</span> Grammar</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="listening">
+      <h2><span class="section-letter">L</span> Listening</h2>
+      <audio controls preload="auto"><source src="https://files.catbox.moe/6fhr70.mp3" type="audio/mpeg"></audio>
+      <div class="questions" id="listening-questions-1">
+        <div class="question"><p>1. What is the woman's name?</p><input type="text" data-answer="maria"><div class="answer-feedback"></div></div>
+        <div class="question"><p>2. What is her job?</p><input type="text" data-answer="nurse"><div class="answer-feedback"></div></div>
+        <div class="question"><p>3. Where is David from?</p><input type="text" data-answer="england"><div class="answer-feedback"></div></div>
+        <div class="question"><p>4. How old is David?</p><input type="text" data-answer="thirty|30"><div class="answer-feedback"></div></div>
+        <div class="question"><p>5. Where are Maria and David?</p><input type="text" data-answer="restaurant"><div class="answer-feedback"></div></div>
+        <button class="btn" onclick="checkTextAnswers('listening-questions-1', 1, 'listening')">Check My Answers</button>
+      </div>
+    </section>
+
+    <section class="reading">
+      <h2><span class="section-letter">R</span> Reading</h2>
+      <div class="reading-text"><p><strong>Meet John.</strong> John is a teacher. He is from Canada. He is thirty-two years old. He works at a small school. He teaches English. His students are young. They are between eight and ten years old. John likes his job. He is happy. He is a good teacher.</p></div>
+      <div class="questions" id="reading-questions-1">
+        <div class="question"><p>1. What is John's job?</p><input type="text" data-answer="teacher"><div class="answer-feedback"></div></div>
+        <div class="question"><p>2. Where is he from?</p><input type="text" data-answer="canada"><div class="answer-feedback"></div></div>
+        <div class="question"><p>3. What does he teach?</p><input type="text" data-answer="english"><div class="answer-feedback"></div></div>
+        <div class="question"><p>4. How old are his students?</p><input type="text" data-answer="between eight and ten|8 and 10|eight and ten|8 to 10|8-10|between 8 and 10|eight to ten"><div class="answer-feedback"></div></div>
+        <div class="question"><p>5. Does John like his job?</p><input type="text" data-answer="yes|yes he does|yes, he does"><div class="answer-feedback"></div></div>
+        <button class="btn" onclick="checkTextAnswers('reading-questions-1', 1, 'reading')">Check My Answers</button>
+      </div>
+    </section>
+
+    <section class="writing">
+      <h2><span class="section-letter">W</span> Writing</h2>
+      <div class="writing-prompt">
+        <strong>Task:</strong> Introduce yourself and a friend. Write 40–60 words. Use the verb <em>to be</em> (am, is, are).<br><br><em>Do not use AI. Write with your own words.</em>
+      </div>
+      <textarea class="writing-input" id="writing-input-1" placeholder="Start writing here..."></textarea>
+      <div class="word-counter"><span id="word-count-1">0</span> words</div>
+      <button class="btn" id="submit-writing-1" onclick="submitWriting(1)">Submit Writing</button>
+      <div class="submit-status" id="writing-status-1"></div>
+      <div class="teacher-feedback-box" id="feedback-box-1">
+        <h4>👨‍🏫 Teacher's Feedback</h4>
+        <p id="feedback-text-1"></p>
+      </div>
+    </section>
+
+    <section class="vocabulary">
+      <h2><span class="section-letter">V</span> Vocabulary <span class="vocab-progress-badge" id="vocab-badge-1">0 / 8 words</span></h2>
+      <div class="vocab-grid" id="vocab-grid-1">
+        <div class="vocab-card" data-word="name"><strong>name <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(1, 'name', this)">🔊</button></strong><div class="def">What someone is called.</div><div class="example"><strong>Example:</strong> Her name is Maria.</div></div>
+        <div class="vocab-card" data-word="age"><strong>age <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(1, 'age', this)">🔊</button></strong><div class="def">How old someone is.</div><div class="example"><strong>Example:</strong> What is your age?</div></div>
+        <div class="vocab-card" data-word="job"><strong>job <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(1, 'job', this)">🔊</button></strong><div class="def">The work someone does.</div><div class="example"><strong>Example:</strong> She has a new job.</div></div>
+        <div class="vocab-card" data-word="country"><strong>country <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(1, 'country', this)">🔊</button></strong><div class="def">A place where people live.</div><div class="example"><strong>Example:</strong> Brazil is a big country.</div></div>
+        <div class="vocab-card" data-word="friend"><strong>friend <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(1, 'friend', this)">🔊</button></strong><div class="def">A person you like.</div><div class="example"><strong>Example:</strong> David is my best friend.</div></div>
+        <div class="vocab-card" data-word="nurse"><strong>nurse <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(1, 'nurse', this)">🔊</button></strong><div class="def">Cares for sick people.</div><div class="example"><strong>Example:</strong> The nurse is very kind.</div></div>
+        <div class="vocab-card" data-word="chef"><strong>chef <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(1, 'chef', this)">🔊</button></strong><div class="def">Cooks food in a restaurant.</div><div class="example"><strong>Example:</strong> The chef makes great pasta.</div></div>
+        <div class="vocab-card" data-word="happy"><strong>happy <span class="type">(adjective)</span><button class="speaker-btn" onclick="speakWord(1, 'happy', this)">🔊</button></strong><div class="def">Feeling good and pleased.</div><div class="example"><strong>Example:</strong> I am happy today!</div></div>
+      </div>
+    </section>
+
+    <section class="grammar">
+      <h2><span class="section-letter">G</span> Grammar — Verb to be</h2>
+      <div class="grammar-box">
+        <h4>Explicação (Português)</h4>
+        <p>O verbo <code>to be</code> significa <strong>ser</strong> ou <strong>estar</strong>. Em inglês, ele muda dependendo da pessoa:</p>
+        <ul><li><strong>I am</strong> (eu sou / eu estou)</li><li><strong>You are</strong> (você é / você está)</li><li><strong>He / She / It is</strong> (ele / ela / isto é ou está)</li><li><strong>We are</strong> (nós somos / nós estamos)</li><li><strong>They are</strong> (eles / elas são ou estão)</li></ul>
+        <p><strong>Negativa:</strong> adicionamos <code>not</code>. <strong>Interrogativa:</strong> invertemos o verbo e o sujeito.</p>
+      </div>
+      <div class="questions" id="grammar-questions-1">
+        <div class="question" data-correct="b"><p>1. My name ___ Maria.</p><label><input type="radio" name="q1_1" value="a"> a) am</label><label><input type="radio" name="q1_1" value="b"> b) is</label><label><input type="radio" name="q1_1" value="c"> c) are</label><label><input type="radio" name="q1_1" value="d"> d) be</label><div class="answer-feedback"></div></div>
+        <div class="question" data-correct="c"><p>2. They ___ from Brazil.</p><label><input type="radio" name="q1_2" value="a"> a) am</label><label><input type="radio" name="q1_2" value="b"> b) is</label><label><input type="radio" name="q1_2" value="c"> c) are</label><label><input type="radio" name="q1_2" value="d"> d) be</label><div class="answer-feedback"></div></div>
+        <div class="question" data-correct="a"><p>3. I ___ a teacher.</p><label><input type="radio" name="q1_3" value="a"> a) am</label><label><input type="radio" name="q1_3" value="b"> b) is</label><label><input type="radio" name="q1_3" value="c"> c) are</label><label><input type="radio" name="q1_3" value="d"> d) be</label><div class="answer-feedback"></div></div>
+        <div class="question" data-correct="c"><p>4. ___ you happy?</p><label><input type="radio" name="q1_4" value="a"> a) Am</label><label><input type="radio" name="q1_4" value="b"> b) Is</label><label><input type="radio" name="q1_4" value="c"> c) Are</label><label><input type="radio" name="q1_4" value="d"> d) Be</label><div class="answer-feedback"></div></div>
+        <div class="question" data-correct="b"><p>5. She ___ not a doctor.</p><label><input type="radio" name="q1_5" value="a"> a) am</label><label><input type="radio" name="q1_5" value="b"> b) is</label><label><input type="radio" name="q1_5" value="c"> c) are</label><label><input type="radio" name="q1_5" value="d"> d) be</label><div class="answer-feedback"></div></div>
+        <button class="btn" onclick="checkGrammar(1)">Check My Answers</button>
+      </div>
+      <div class="ai-prompt-box">
+        <h4>🤖 Prompt para IA</h4>
+        <pre id="ai-prompt-1">Explain the verb TO BE in English for a Brazilian student at A1 level. Give me 10 extra exercises with answers.</pre>
+        <button class="btn btn-secondary" onclick="copyPrompt(1)">Copy Prompt</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================== DAY 2 ============================== -->
+  <div id="day-2" class="day-content">
+    <header class="active">
+      <span class="day-badge">Day 2 · A1</span>
+      <h1>Subject Pronouns &amp; Possessive Adjectives</h1>
+      <p class="subtitle">Focus: I, you, he, she, it, we, they + my, your, his, her, its, our, their</p>
+      <div class="progress-box">
+        <h3>Today's Progress</h3>
+        <div class="progress-items" data-day="2">
+          <div class="progress-item" data-section="listening"><span class="letter">L</span> Listening</div>
+          <div class="progress-item" data-section="reading"><span class="letter">R</span> Reading</div>
+          <div class="progress-item" data-section="writing"><span class="letter">W</span> Writing</div>
+          <div class="progress-item" data-section="vocabulary"><span class="letter">V</span> Vocabulary</div>
+          <div class="progress-item" data-section="grammar"><span class="letter">G</span> Grammar</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="listening">
+      <h2><span class="section-letter">L</span> Listening</h2>
+      <audio controls preload="auto"><source src="https://files.catbox.moe/nxugt0.mp3" type="audio/mpeg"></audio>
+      <div class="questions" id="listening-questions-2">
+        <div class="question"><p>1. What is Anna's mother's name?</p><input type="text" data-answer="linda"><div class="answer-feedback"></div></div>
+        <div class="question"><p>2. What is her mother's job?</p><input type="text" data-answer="doctor"><div class="answer-feedback"></div></div>
+        <div class="question"><p>3. What is Anna's father's job?</p><input type="text" data-answer="engineer"><div class="answer-feedback"></div></div>
+        <div class="question"><p>4. What is the dog's name?</p><input type="text" data-answer="max"><div class="answer-feedback"></div></div>
+        <div class="question"><p>5. Is the family big or small?</p><input type="text" data-answer="small"><div class="answer-feedback"></div></div>
+        <button class="btn" onclick="checkTextAnswers('listening-questions-2', 2, 'listening')">Check My Answers</button>
+      </div>
+    </section>
+
+    <section class="reading">
+      <h2><span class="section-letter">R</span> Reading</h2>
+      <div class="reading-text"><p><strong>My Family.</strong> Hi, my name is Anna. This is my family. This is my mother. Her name is Linda. She is a doctor. This is my father. His name is Robert. He is an engineer. I have a brother. His name is Peter. He is a student. We have a dog. Its name is Max. Max is very friendly. We love our dog. Our family is small. We are very happy.</p></div>
+      <div class="questions" id="reading-questions-2">
+        <div class="question"><p>1. Who is Linda?</p><input type="text" data-answer="mother|anna's mother"><div class="answer-feedback"></div></div>
+        <div class="question"><p>2. What is Robert's job?</p><input type="text" data-answer="engineer"><div class="answer-feedback"></div></div>
+        <div class="question"><p>3. What is the dog's name?</p><input type="text" data-answer="max"><div class="answer-feedback"></div></div>
+        <div class="question"><p>4. What is Peter's job?</p><input type="text" data-answer="student"><div class="answer-feedback"></div></div>
+        <div class="question"><p>5. Are they happy?</p><input type="text" data-answer="yes|yes they are"><div class="answer-feedback"></div></div>
+        <button class="btn" onclick="checkTextAnswers('reading-questions-2', 2, 'reading')">Check My Answers</button>
+      </div>
+    </section>
+
+    <section class="writing">
+      <h2><span class="section-letter">W</span> Writing</h2>
+      <div class="writing-prompt">
+        <strong>Task:</strong> Describe your family. Write 50–70 words. Use possessive adjectives (my, his, her, our, their).<br><br><em>Do not use AI. Write with your own words.</em>
+      </div>
+      <textarea class="writing-input" id="writing-input-2" placeholder="Start writing here..."></textarea>
+      <div class="word-counter"><span id="word-count-2">0</span> words</div>
+      <button class="btn" id="submit-writing-2" onclick="submitWriting(2)">Submit Writing</button>
+      <div class="submit-status" id="writing-status-2"></div>
+      <div class="teacher-feedback-box" id="feedback-box-2">
+        <h4>👨‍🏫 Teacher's Feedback</h4>
+        <p id="feedback-text-2"></p>
+      </div>
+    </section>
+
+    <section class="vocabulary">
+      <h2><span class="section-letter">V</span> Vocabulary <span class="vocab-progress-badge" id="vocab-badge-2">0 / 6 words</span></h2>
+      <div class="vocab-grid" id="vocab-grid-2">
+        <div class="vocab-card" data-word="mother"><strong>mother <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(2, 'mother', this)">🔊</button></strong><div class="def">A female parent.</div><div class="example"><strong>Example:</strong> My mother is a doctor.</div></div>
+        <div class="vocab-card" data-word="father"><strong>father <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(2, 'father', this)">🔊</button></strong><div class="def">A male parent.</div><div class="example"><strong>Example:</strong> His father works in an office.</div></div>
+        <div class="vocab-card" data-word="brother"><strong>brother <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(2, 'brother', this)">🔊</button></strong><div class="def">A male sibling.</div><div class="example"><strong>Example:</strong> I have one brother.</div></div>
+        <div class="vocab-card" data-word="sister"><strong>sister <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(2, 'sister', this)">🔊</button></strong><div class="def">A female sibling.</div><div class="example"><strong>Example:</strong> Her sister is a student.</div></div>
+        <div class="vocab-card" data-word="family"><strong>family <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(2, 'family', this)">🔊</button></strong><div class="def">A group of related people.</div><div class="example"><strong>Example:</strong> My family is small.</div></div>
+        <div class="vocab-card" data-word="friendly"><strong>friendly <span class="type">(adjective)</span><button class="speaker-btn" onclick="speakWord(2, 'friendly', this)">🔊</button></strong><div class="def">Nice and kind to others.</div><div class="example"><strong>Example:</strong> Our dog is very friendly.</div></div>
+      </div>
+    </section>
+
+    <section class="grammar">
+      <h2><span class="section-letter">G</span> Grammar — Pronouns &amp; Possessives</h2>
+      <div class="grammar-box">
+        <h4>Explicação (Português)</h4>
+        <p><strong>Subject Pronouns:</strong> <code>I, you, he, she, it, we, they</code>.</p>
+        <p><strong>Possessive Adjectives:</strong></p>
+        <ul><li>I → <strong>my</strong></li><li>You → <strong>your</strong></li><li>He → <strong>his</strong></li><li>She → <strong>her</strong></li><li>It → <strong>its</strong></li><li>We → <strong>our</strong></li><li>They → <strong>their</strong></li></ul>
+      </div>
+      <div class="questions" id="grammar-questions-2">
+        <div class="question" data-correct="c"><p>1. This is my sister. ___ name is Linda.</p><label><input type="radio" name="q2_1" value="a"> a) His</label><label><input type="radio" name="q2_1" value="b"> b) My</label><label><input type="radio" name="q2_1" value="c"> c) Her</label><label><input type="radio" name="q2_1" value="d"> d) Their</label><div class="answer-feedback"></div></div>
+        <div class="question" data-correct="b"><p>2. I have a dog. ___ name is Max.</p><label><input type="radio" name="q2_2" value="a"> a) His</label><label><input type="radio" name="q2_2" value="b"> b) Its</label><label><input type="radio" name="q2_2" value="c"> c) Her</label><label><input type="radio" name="q2_2" value="d"> d) Your</label><div class="answer-feedback"></div></div>
+        <div class="question" data-correct="a"><p>3. We love ___ family.</p><label><input type="radio" name="q2_3" value="a"> a) our</label><label><input type="radio" name="q2_3" value="b"> b) my</label><label><input type="radio" name="q2_3" value="c"> c) their</label><label><input type="radio" name="q2_3" value="d"> d) his</label><div class="answer-feedback"></div></div>
+        <div class="question" data-correct="d"><p>4. John and Peter are brothers. ___ father is Robert.</p><label><input type="radio" name="q2_4" value="a"> a) His</label><label><input type="radio" name="q2_4" value="b"> b) Her</label><label><input type="radio" name="q2_4" value="c"> c) Our</label><label><input type="radio" name="q2_4" value="d"> d) Their</label><div class="answer-feedback"></div></div>
+        <div class="question" data-correct="b"><p>5. This is my father. ___ name is Mark.</p><label><input type="radio" name="q2_5" value="a"> a) Her</label><label><input type="radio" name="q2_5" value="b"> b) His</label><label><input type="radio" name="q2_5" value="c"> c) Its</label><label><input type="radio" name="q2_5" value="d"> d) Their</label><div class="answer-feedback"></div></div>
+        <button class="btn" onclick="checkGrammar(2)">Check My Answers</button>
+      </div>
+      <div class="ai-prompt-box">
+        <h4>🤖 Prompt para IA</h4>
+        <pre id="ai-prompt-2">Explain Subject Pronouns and Possessive Adjectives for a Brazilian student at A1 level. Give me 10 extra exercises with answers.</pre>
+        <button class="btn btn-secondary" onclick="copyPrompt(2)">Copy Prompt</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================== RESOURCES ============================== -->
+  <section id="resources">
+    <h2>🔗 Extra Resources</h2>
+    <p class="section-desc">Practice more during the week. Choose at least one.</p>
+    <div class="resources-grid">
+      <a href="https://esl-lab.com/" target="_blank" rel="noopener" class="resource-link">
+        <strong>ESL-Lab</strong>
+        <span>Listening practice with quizzes</span>
+      </a>
+      <a href="https://learningenglish.voanews.com/z/1579/episodes" target="_blank" rel="noopener" class="resource-link">
+        <strong>VOA Learning English</strong>
+        <span>News in simplified English</span>
+      </a>
+      <a href="https://www.npr.org/podcasts-and-shows/" target="_blank" rel="noopener" class="resource-link">
+        <strong>NPR</strong>
+        <span>Real-world listening (B1+)</span>
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<!-- MISSION POPUP -->
+<div class="popup-overlay" id="mission-popup">
+  <div class="popup-card">
+    <span class="emoji">🎉</span>
+    <h2>Mission Complete!</h2>
+    <p id="popup-message">Congrats, Vando! You finished all activities for this Day.</p>
+    <button class="btn" onclick="closePopup()">Awesome!</button>
+  </div>
+</div>
+
+<footer class="footer-actions">
+  <p>Vando's English Journey · Days 1 & 2</p>
+  <button class="btn-text" onclick="resetStudent()">Not you? Change student name</button>
+</footer>
+
+<script>
+  const FIREBASE_URL = 'https://english-meetings-f08e4-default-rtdb.firebaseio.com';
+  const SECTIONS = ['listening', 'reading', 'writing', 'vocabulary', 'grammar'];
+  const DAYS_ACTIVE = [1, 2]; 
+  let studentName = localStorage.getItem('studentName') || '';
+  
+  const state = {}; 
+  const vocabPlayed = {}; 
+
+  if (!studentName) {
+    document.getElementById('login-modal').style.display = 'flex';
+  } else {
+    initApp();
+  }
+
+  function startApp() {
+    const nameInput = document.getElementById('student-name-input').value.trim();
+    if (!nameInput) return alert('Please enter your name.');
+    studentName = nameInput;
+    localStorage.setItem('studentName', studentName);
+    initApp();
+  }
+
+  function resetStudent() {
+    if(confirm("This will clear your local progress and ask for your name again. Continue?")) {
+      localStorage.removeItem('studentName');
+      location.reload();
+    }
+  }
+
+  async function initApp() {
+    document.getElementById('login-modal').style.display = 'none';
+    document.getElementById('nav-tabs').style.display = 'flex';
+    document.getElementById('app-content').style.display = 'block';
+    
+    fetch(`${FIREBASE_URL}/students/${studentName}.json`, {
+      method: 'PATCH',
+      body: JSON.stringify({ status: 'active', lastLogin: new Date().toISOString() })
+    }).catch(e => console.log('Firebase registration error:', e));
+
+    DAYS_ACTIVE.forEach(d => {
+      state[d] = {};
+      vocabPlayed[d] = new Set(JSON.parse(localStorage.getItem(`day0${d}_vocab_played`) || '[]'));
+      SECTIONS.forEach(s => {
+        state[d][s] = localStorage.getItem(`day0${d}_${s}`) === '1';
+      });
+    });
+
+    try {
+      const res = await fetch(`${FIREBASE_URL}/students/${studentName}/progress.json`);
+      const fbProgress = await res.json() || {};
+
+      DAYS_ACTIVE.forEach(d => {
+        const dayKey = `day0${d}`;
+        const dayData = fbProgress[dayKey] || {};
+        
+        SECTIONS.forEach(s => {
+          const sectionData = dayData[s];
+          if (!sectionData || sectionData === false) {
+            state[d][s] = false;
+            localStorage.removeItem(`day0${d}_${s}`);
+          } else if (sectionData === true || sectionData.completed === true) {
+            state[d][s] = true;
+          }
+          // Se for objeto (novo formato), mas não completed, deixamos false no state local para o checkmark
+          // mas a UI do aluno não tem nota parcial, então só marcamos se completou.
+        });
+      });
+    } catch(e) { console.warn("Could not sync with Firebase", e); }
+
+    DAYS_ACTIVE.forEach(d => {
+      SECTIONS.forEach(s => {
+        if(state[d][s]) updateProgressUI(d, s);
+      });
+      updateVocabUI(d);
+    });
+
+    loadFeedbacks();
+  }
+
+  function switchDay(dayNum) {
+    document.querySelectorAll('.day-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+    document.getElementById(`day-${dayNum}`).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function updateProgressUI(day, section) {
+    const el = document.querySelector(`.progress-items[data-day="${day}"] .progress-item[data-section="${section}"]`);
+    if (el) el.classList.add('done');
+  }
+
+  function updateVocabUI(day) {
+    const badge = document.getElementById(`vocab-badge-${day}`);
+    const totalWords = document.querySelectorAll(`#vocab-grid-${day} .vocab-card`).length;
+    if (badge) badge.textContent = `${vocabPlayed[day].size} / ${totalWords} words`;
+    
+    document.querySelectorAll(`#vocab-grid-${day} .vocab-card`).forEach(card => {
+      card.classList.toggle('listened', vocabPlayed[day].has(card.dataset.word));
+    });
+  }
+
+  function checkMissionComplete(day) {
+    const allDone = SECTIONS.every(s => state[day][s]);
+    if (allDone) {
+      setTimeout(() => {
+        document.getElementById('popup-message').textContent = `Congrats, ${studentName}! You finished all activities for Day ${day}.`;
+        document.getElementById('mission-popup').classList.add('active');
+      }, 400);
+    }
+  }
+
+  function closePopup() { document.getElementById('mission-popup').classList.remove('active'); }
+
+  function checkTextAnswers(containerId, day, section) {
+    const container = document.getElementById(containerId);
+    let score = 0;
+    const total = container.querySelectorAll('.question').length;
+
+    container.querySelectorAll('.question').forEach(q => {
+      const input = q.querySelector('input[type="text"]');
+      const feedback = q.querySelector('.answer-feedback');
+      const userAnswer = input.value.trim().toLowerCase();
+      const alternatives = input.dataset.answer.split('|').map(a => a.trim().toLowerCase());
+      
+      const isCorrect = alternatives.some(c => userAnswer === c || (userAnswer.length > 2 && userAnswer.includes(c)));
+
+      q.classList.remove('answered-correct', 'answered-incorrect');
+      feedback.classList.remove('correct', 'incorrect');
+
+      if (isCorrect) {
+        score++;
+        q.classList.add('answered-correct');
+        feedback.classList.add('correct');
+        feedback.textContent = "✓ You've got it!";
+      } else if (userAnswer === '') {
+        q.classList.add('answered-incorrect');
+        feedback.classList.add('incorrect');
+        feedback.textContent = '✏️ Please write an answer first.';
+      } else {
+        q.classList.add('answered-incorrect');
+        feedback.classList.add('incorrect');
+        feedback.textContent = '✗ Please try again! You can do it!';
+      }
+    });
+
+    // Envia progresso parcial para o Firebase
+    fetch(`${FIREBASE_URL}/students/${studentName}/progress/day0${day}/${section}.json`, {
+      method: 'PATCH',
+      body: JSON.stringify({ score: score, total: total, completed: (score === total) })
+    });
+
+    if (score === total) {
+      state[day][section] = true;
+      localStorage.setItem(`day0${day}_${section}`, '1');
+      updateProgressUI(day, section);
+      checkMissionComplete(day);
+    }
+  }
+
+  function checkGrammar(day) {
+    const container = document.getElementById(`grammar-questions-${day}`);
+    let score = 0;
+    const total = container.querySelectorAll('.question').length;
+
+    container.querySelectorAll('.question').forEach(q => {
+      const correct = q.dataset.correct;
+      const selected = q.querySelector('input[type="radio"]:checked');
+      const feedback = q.querySelector('.answer-feedback');
+
+      q.classList.remove('answered-correct', 'answered-incorrect');
+      feedback.classList.remove('correct', 'incorrect');
+
+      if (!selected) {
+        q.classList.add('answered-incorrect');
+        feedback.classList.add('incorrect');
+        feedback.textContent = '✏️ Please choose an option.';
+        return;
+      }
+
+      if (selected.value === correct) {
+        score++;
+        q.classList.add('answered-correct');
+        feedback.classList.add('correct');
+        feedback.textContent = "✓ You've got it!";
+      } else {
+        q.classList.add('answered-incorrect');
+        feedback.classList.add('incorrect');
+        feedback.textContent = '✗ Please try again! You can do it!';
+      }
+    });
+
+    fetch(`${FIREBASE_URL}/students/${studentName}/progress/day0${day}/grammar.json`, {
+      method: 'PATCH',
+      body: JSON.stringify({ score: score, total: total, completed: (score === total) })
+    });
+
+    if (score === total) {
+      state[day]['grammar'] = true;
+      localStorage.setItem(`day0${day}_grammar`, '1');
+      updateProgressUI(day, 'grammar');
+      checkMissionComplete(day);
+    }
+  }
+
+  function speakWord(day, word, btn) {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(word);
+    u.lang = 'en-US';
+    u.rate = 0.85;
+    window.speechSynthesis.speak(u);
+
+    btn.classList.add('playing');
+    setTimeout(() => btn.classList.remove('playing'), 700);
+
+    vocabPlayed[day].add(word);
+    localStorage.setItem(`day0${day}_vocab_played`, JSON.stringify([...vocabPlayed[day]]));
+    updateVocabUI(day);
+
+    const totalWords = document.querySelectorAll(`#vocab-grid-${day} .vocab-card`).length;
+    const score = vocabPlayed[day].size;
+
+    fetch(`${FIREBASE_URL}/students/${studentName}/progress/day0${day}/vocabulary.json`, {
+      method: 'PATCH',
+      body: JSON.stringify({ score: score, total: totalWords, completed: (score >= totalWords) })
+    });
+
+    if (score >= totalWords) {
+      state[day]['vocabulary'] = true;
+      localStorage.setItem(`day0${day}_vocabulary`, '1');
+      updateProgressUI(day, 'vocabulary');
+      checkMissionComplete(day);
+    }
+  }
+
+  DAYS_ACTIVE.forEach(d => {
+    const input = document.getElementById(`writing-input-${d}`);
+    if (input) {
+      input.addEventListener('input', () => {
+        const words = input.value.trim().split(/\s+/).filter(Boolean);
+        document.getElementById(`word-count-${d}`).textContent = words.length;
+      });
+    }
+  });
+
+  async function submitWriting(day) {
+    const input = document.getElementById(`writing-input-${day}`);
+    const text = input.value.trim();
+    const statusEl = document.getElementById(`writing-status-${day}`);
+    const btn = document.getElementById(`submit-writing-${day}`);
+
+    if (text.length < 20) {
+      statusEl.className = 'submit-status error';
+      statusEl.textContent = 'Please write at least a few sentences before submitting.';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+    statusEl.className = 'submit-status';
+    statusEl.textContent = '';
+
+    try {
+      await fetch(`${FIREBASE_URL}/students/${studentName}/writing/day0${day}.json`, {
+        method: 'PUT',
+        body: JSON.stringify({ text: text, timestamp: new Date().toISOString() })
+      });
+
+      await fetch(`${FIREBASE_URL}/students/${studentName}/progress/day0${day}/writing.json`, {
+        method: 'PATCH',
+        body: JSON.stringify({ completed: true, score: 1, total: 1 })
+      });
+
+      statusEl.className = 'submit-status success';
+      statusEl.textContent = '✓ Writing submitted! Your teacher will read it.';
+      input.value = '';
+      document.getElementById(`word-count-${day}`).textContent = '0';
+      
+      state[day]['writing'] = true;
+      localStorage.setItem(`day0${day}_writing`, '1');
+      updateProgressUI(day, 'writing');
+      checkMissionComplete(day);
+    } catch (err) {
+      statusEl.className = 'submit-status error';
+      statusEl.textContent = 'Error submitting. Please try again.';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Submit Writing';
+    }
+  }
+
+  function copyPrompt(day) {
+    const text = document.getElementById(`ai-prompt-${day}`).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = event.target;
+      const original = btn.textContent;
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => { btn.textContent = original; }, 1500);
+    });
+  }
+
+  async function loadFeedbacks() {
+    for(let d of DAYS_ACTIVE) {
+      try {
+        const res = await fetch(`${FIREBASE_URL}/students/${studentName}/feedback/day0${d}.json`);
+        const data = await res.json();
+        if (data && data.text) {
+          const box = document.getElementById(`feedback-box-${d}`);
+          if(box) {
+            box.style.display = 'block';
+            document.getElementById(`feedback-text-${d}`).textContent = data.text;
+          }
+        }
+      } catch(e) {}
+    }
+  }
+</script>
+</body>
+</html>
