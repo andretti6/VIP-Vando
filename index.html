@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vando's English Journey — Days 1-4</title>
+<title>Vando's English Journey — Days 1-6</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -198,6 +198,8 @@
   <button class="nav-tab" onclick="switchDay(2)">Day 2</button>
   <button class="nav-tab" onclick="switchDay(3)">Day 3</button>
   <button class="nav-tab" onclick="switchDay(4)">Day 4</button>
+  <button class="nav-tab" onclick="switchDay(5)">Day 5</button>
+  <button class="nav-tab" onclick="switchDay(6)">Day 6</button>
 </div>
 
 <div id="app-content" style="display: none;">
@@ -207,7 +209,6 @@
     <header class="active">
       <span class="day-badge">Day 1 · A1</span>
       <h1>Verb to be &amp; Introductions</h1>
-      <p class="subtitle">Focus: am, is, are — talking about yourself and others</p>
       <div class="progress-box">
         <h3>Today's Progress</h3>
         <div class="progress-items" data-day="1">
@@ -223,12 +224,8 @@
     <section class="listening">
       <h2><span class="section-letter">L</span> Listening</h2>
       <audio controls preload="auto"><source src="https://files.catbox.moe/6fhr70.mp3" type="audio/mpeg"></audio>
-      
       <button class="btn btn-secondary btn-script" onclick="toggleScript(1, this)">Show Audio Script</button>
-      <div class="script-box" id="script-1">
-        <strong>Script:</strong> Hello. Good morning. My name is Maria. I am a nurse. I am from Brazil. I am twenty-five years old. This is my friend. His name is David. He is a chef. He is from England. He is thirty years old. We are at a small restaurant. The restaurant is new. It is very good. David is happy. I am happy too. We are good friends.
-      </div>
-
+      <div class="script-box" id="script-1"><strong>Script:</strong> Hello. Good morning. My name is Maria. I am a nurse. I am from Brazil. I am twenty-five years old. This is my friend. His name is David. He is a chef. He is from England. He is thirty years old. We are at a small restaurant. The restaurant is new. It is very good. David is happy. I am happy too. We are good friends.</div>
       <div class="questions" id="listening-questions-1">
         <div class="question"><p>1. What is the woman's name?</p><input type="text" data-answer="maria"><div class="answer-feedback"></div></div>
         <div class="question"><p>2. What is her job?</p><input type="text" data-answer="nurse"><div class="answer-feedback"></div></div>
@@ -261,10 +258,7 @@
       <div class="word-counter"><span id="word-count-1">0</span> words</div>
       <button class="btn" id="submit-writing-1" onclick="submitWriting(1)">Submit Writing</button>
       <div class="submit-status" id="writing-status-1"></div>
-      <div class="teacher-feedback-box" id="feedback-box-1">
-        <h4>👨‍🏫 Teacher's Feedback</h4>
-        <p id="feedback-text-1"></p>
-      </div>
+      <div class="teacher-feedback-box" id="feedback-box-1"><h4>👨‍🏫 Teacher's Feedback</h4><p id="feedback-text-1"></p></div>
     </section>
 
     <section class="vocabulary">
@@ -310,7 +304,6 @@
     <header class="active">
       <span class="day-badge">Day 2 · A1</span>
       <h1>Subject Pronouns &amp; Possessive Adjectives</h1>
-      <p class="subtitle">Focus: I, you, he, she, it, we, they + my, your, his, her, its, our, their</p>
       <div class="progress-box">
         <h3>Today's Progress</h3>
         <div class="progress-items" data-day="2">
@@ -326,12 +319,8 @@
     <section class="listening">
       <h2><span class="section-letter">L</span> Listening</h2>
       <audio controls preload="auto"><source src="https://files.catbox.moe/nxugt0.mp3" type="audio/mpeg"></audio>
-      
       <button class="btn btn-secondary btn-script" onclick="toggleScript(2, this)">Show Audio Script</button>
-      <div class="script-box" id="script-2">
-        <strong>Script:</strong> Hi, my name is Anna. This is my family. This is my mother. Her name is Linda. She is a doctor. This is my father. His name is Robert. He is an engineer. I have a brother. His name is Peter. He is a student. We have a dog. Its name is Max. Max is very friendly. We love our dog. Our family is small. We are very happy.
-      </div>
-
+      <div class="script-box" id="script-2"><strong>Script:</strong> Hi, my name is Anna. This is my family. This is my mother. Her name is Linda. She is a doctor. This is my father. His name is Robert. He is an engineer. I have a brother. His name is Peter. He is a student. We have a dog. Its name is Max. Max is very friendly. We love our dog. Our family is small. We are very happy.</div>
       <div class="questions" id="listening-questions-2">
         <div class="question"><p>1. What is Anna's mother's name?</p><input type="text" data-answer="linda"><div class="answer-feedback"></div></div>
         <div class="question"><p>2. What is her mother's job?</p><input type="text" data-answer="doctor"><div class="answer-feedback"></div></div>
@@ -364,10 +353,7 @@
       <div class="word-counter"><span id="word-count-2">0</span> words</div>
       <button class="btn" id="submit-writing-2" onclick="submitWriting(2)">Submit Writing</button>
       <div class="submit-status" id="writing-status-2"></div>
-      <div class="teacher-feedback-box" id="feedback-box-2">
-        <h4>👨‍🏫 Teacher's Feedback</h4>
-        <p id="feedback-text-2"></p>
-      </div>
+      <div class="teacher-feedback-box" id="feedback-box-2"><h4>👨‍🏫 Teacher's Feedback</h4><p id="feedback-text-2"></p></div>
     </section>
 
     <section class="vocabulary">
@@ -411,7 +397,6 @@
     <header class="active">
       <span class="day-badge">Day 3 · A1</span>
       <h1>Articles &amp; Singular/Plural Nouns</h1>
-      <p class="subtitle">Focus: a, an, the + regular and irregular plurals</p>
       <div class="progress-box">
         <h3>Today's Progress</h3>
         <div class="progress-items" data-day="3">
@@ -427,12 +412,8 @@
     <section class="listening">
       <h2><span class="section-letter">L</span> Listening</h2>
       <audio controls preload="auto"><source src="https://files.catbox.moe/ksnz3t.mp3" type="audio/mpeg"></audio>
-      
       <button class="btn btn-secondary btn-script" onclick="toggleScript(3, this)">Show Audio Script</button>
-      <div class="script-box" id="script-3">
-        <strong>Script:</strong> In my bag, I have some things. I have a book. The book is blue. I have an apple. The apple is red. I have two pens. The pens are black. I have three notebooks. The notebooks are new. I have a phone. The phone is old. My bag is heavy! I have many things in my bag.
-      </div>
-
+      <div class="script-box" id="script-3"><strong>Script:</strong> In my bag, I have some things. I have a book. The book is blue. I have an apple. The apple is red. I have two pens. The pens are black. I have three notebooks. The notebooks are new. I have a phone. The phone is old. My bag is heavy! I have many things in my bag.</div>
       <div class="questions" id="listening-questions-3">
         <div class="question"><p>1. What color is the book?</p><input type="text" data-answer="blue"><div class="answer-feedback"></div></div>
         <div class="question"><p>2. How many pens does the person have?</p><input type="text" data-answer="two|2"><div class="answer-feedback"></div></div>
@@ -465,10 +446,7 @@
       <div class="word-counter"><span id="word-count-3">0</span> words</div>
       <button class="btn" id="submit-writing-3" onclick="submitWriting(3)">Submit Writing</button>
       <div class="submit-status" id="writing-status-3"></div>
-      <div class="teacher-feedback-box" id="feedback-box-3">
-        <h4>👨‍🏫 Teacher's Feedback</h4>
-        <p id="feedback-text-3"></p>
-      </div>
+      <div class="teacher-feedback-box" id="feedback-box-3"><h4>👨‍🏫 Teacher's Feedback</h4><p id="feedback-text-3"></p></div>
     </section>
 
     <section class="vocabulary">
@@ -512,7 +490,6 @@
     <header class="active">
       <span class="day-badge">Day 4 · A1</span>
       <h1>Demonstratives</h1>
-      <p class="subtitle">Focus: this, that, these, those</p>
       <div class="progress-box">
         <h3>Today's Progress</h3>
         <div class="progress-items" data-day="4">
@@ -528,26 +505,8 @@
     <section class="listening">
       <h2><span class="section-letter">L</span> Listening</h2>
       <audio controls preload="auto"><source src="https://files.catbox.moe/nnsc12.mp3" type="audio/mpeg"></audio>
-      
       <button class="btn btn-secondary btn-script" onclick="toggleScript(4, this)">Show Audio Script</button>
-      <div class="script-box" id="script-4">
-        <strong>Script:</strong><br><br>
-        <strong>Seller:</strong> Hello, can I help you?<br>
-        <strong>Customer:</strong> Yes, please. I want this shirt. The blue one.<br>
-        <strong>Seller:</strong> Yes, this is nice.<br>
-        <strong>Customer:</strong> How much is it?<br>
-        <strong>Seller:</strong> It is twenty dollars.<br>
-        <strong>Customer:</strong> OK. And what is that?<br>
-        <strong>Seller:</strong> That is a hat.<br>
-        <strong>Customer:</strong> How much is that hat?<br>
-        <strong>Seller:</strong> It is ten dollars.<br>
-        <strong>Customer:</strong> I want the shirt and the hat.<br>
-        <strong>Seller:</strong> Here you are.<br>
-        <strong>Customer:</strong> Thank you. And these shoes?<br>
-        <strong>Seller:</strong> Those shoes are fifty dollars.<br>
-        <strong>Customer:</strong> Oh, that is expensive. I just want the shirt and the hat.
-      </div>
-
+      <div class="script-box" id="script-4"><strong>Script:</strong><br><br><strong>Seller:</strong> Hello, can I help you?<br><strong>Customer:</strong> Yes, please. I want this shirt. The blue one.<br><strong>Seller:</strong> Yes, this is nice.<br><strong>Customer:</strong> How much is it?<br><strong>Seller:</strong> It is twenty dollars.<br><strong>Customer:</strong> OK. And what is that?<br><strong>Seller:</strong> That is a hat.<br><strong>Customer:</strong> How much is that hat?<br><strong>Seller:</strong> It is ten dollars.<br><strong>Customer:</strong> I want the shirt and the hat.<br><strong>Seller:</strong> Here you are.<br><strong>Customer:</strong> Thank you. And these shoes?<br><strong>Seller:</strong> Those shoes are fifty dollars.<br><strong>Customer:</strong> Oh, that is expensive. I just want the shirt and the hat.</div>
       <div class="questions" id="listening-questions-4">
         <div class="question"><p>1. What does the customer want first?</p><input type="text" data-answer="shirt"><div class="answer-feedback"></div></div>
         <div class="question"><p>2. What color is the shirt?</p><input type="text" data-answer="blue"><div class="answer-feedback"></div></div>
@@ -574,16 +533,13 @@
     <section class="writing">
       <h2><span class="section-letter">W</span> Writing</h2>
       <div class="writing-prompt">
-        <strong>Task:</strong> You are at a store. Write a short dialogue (4–6 lines) between you and the seller. Write 40–60 words. Use demonstratives (this, that, these, those).<br><br><em>Do not use AI. Write with your own words.</em>
+        <strong>Task:</strong> You are at a store. Write a short dialogue (4–6 lines) between you and the seller. Write 40–60 words. Use demonstratives.<br><br><em>Do not use AI. Write with your own words.</em>
       </div>
       <textarea class="writing-input" id="writing-input-4" placeholder="Start writing here..."></textarea>
       <div class="word-counter"><span id="word-count-4">0</span> words</div>
       <button class="btn" id="submit-writing-4" onclick="submitWriting(4)">Submit Writing</button>
       <div class="submit-status" id="writing-status-4"></div>
-      <div class="teacher-feedback-box" id="feedback-box-4">
-        <h4>👨‍🏫 Teacher's Feedback</h4>
-        <p id="feedback-text-4"></p>
-      </div>
+      <div class="teacher-feedback-box" id="feedback-box-4"><h4>👨‍🏫 Teacher's Feedback</h4><p id="feedback-text-4"></p></div>
     </section>
 
     <section class="vocabulary">
@@ -626,6 +582,198 @@
     </section>
   </div>
 
+  <!-- ============================== DAY 5 ============================== -->
+  <div id="day-5" class="day-content">
+    <header class="active">
+      <span class="day-badge">Day 5 · A1</span>
+      <h1>There is / There are</h1>
+      <div class="progress-box">
+        <h3>Today's Progress</h3>
+        <div class="progress-items" data-day="5">
+          <div class="progress-item" data-section="listening"><span class="letter">L</span> Listening</div>
+          <div class="progress-item" data-section="reading"><span class="letter">R</span> Reading</div>
+          <div class="progress-item" data-section="writing"><span class="letter">W</span> Writing</div>
+          <div class="progress-item" data-section="vocabulary"><span class="letter">V</span> Vocabulary</div>
+          <div class="progress-item" data-section="grammar"><span class="letter">G</span> Grammar</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="listening">
+      <h2><span class="section-letter">L</span> Listening</h2>
+      <audio controls preload="auto"><source src="https://files.catbox.moe/rwjdq0.mp3" type="audio/mpeg"></audio>
+      <button class="btn btn-secondary btn-script" onclick="toggleScript(5, this)">Show Audio Script</button>
+      <div class="script-box" id="script-5"><strong>Script:</strong> I live in a small apartment. There is one bedroom. There is a living room. There is a kitchen. There are two chairs in the kitchen. There is a table too. There is a bathroom. There are two windows in the living room. There is a TV. There are some plants near the window. There is no garden, but I love my apartment. It is very comfortable.</div>
+      <div class="questions" id="listening-questions-5">
+        <div class="question"><p>1. How many bedrooms are there?</p><input type="text" data-answer="one|1"><div class="answer-feedback"></div></div>
+        <div class="question"><p>2. How many chairs are in the kitchen?</p><input type="text" data-answer="two|2"><div class="answer-feedback"></div></div>
+        <div class="question"><p>3. Where are the windows?</p><input type="text" data-answer="in the living room|living room"><div class="answer-feedback"></div></div>
+        <div class="question"><p>4. Are there any plants?</p><input type="text" data-answer="yes|yes there are"><div class="answer-feedback"></div></div>
+        <div class="question"><p>5. Is there a garden?</p><input type="text" data-answer="no|no there isn't"><div class="answer-feedback"></div></div>
+        <button class="btn" onclick="checkTextAnswers('listening-questions-5', 5, 'listening')">Check My Answers</button>
+      </div>
+    </section>
+
+    <section class="reading">
+      <h2><span class="section-letter">R</span> Reading</h2>
+      <div class="reading-text"><p>I live in a small apartment. There is one bedroom. There is a living room. There is a kitchen. There are two chairs in the kitchen. There is a table too. There is a bathroom. There are two windows in the living room. There is a TV. There are some plants near the window. There is no garden, but I love my apartment. It is very comfortable.</p></div>
+      <div class="questions" id="reading-questions-5">
+        <div class="question"><p>1. How many bedrooms?</p><input type="text" data-answer="one|1"><div class="answer-feedback"></div></div>
+        <div class="question"><p>2. Where are the chairs?</p><input type="text" data-answer="kitchen|in the kitchen"><div class="answer-feedback"></div></div>
+        <div class="question"><p>3. Is there a TV?</p><input type="text" data-answer="yes|yes there is"><div class="answer-feedback"></div></div>
+        <div class="question"><p>4. Where are the plants?</p><input type="text" data-answer="near the window"><div class="answer-feedback"></div></div>
+        <div class="question"><p>5. Is there a garden?</p><input type="text" data-answer="no|no there isn't"><div class="answer-feedback"></div></div>
+        <button class="btn" onclick="checkTextAnswers('reading-questions-5', 5, 'reading')">Check My Answers</button>
+      </div>
+    </section>
+
+    <section class="writing">
+      <h2><span class="section-letter">W</span> Writing</h2>
+      <div class="writing-prompt">
+        <strong>Task:</strong> Describe your home. Write 50–70 words. Use "there is" and "there are".<br><br><em>Do not use AI. Write with your own words.</em>
+      </div>
+      <textarea class="writing-input" id="writing-input-5" placeholder="Start writing here..."></textarea>
+      <div class="word-counter"><span id="word-count-5">0</span> words</div>
+      <button class="btn" id="submit-writing-5" onclick="submitWriting(5)">Submit Writing</button>
+      <div class="submit-status" id="writing-status-5"></div>
+      <div class="teacher-feedback-box" id="feedback-box-5"><h4>👨‍🏫 Teacher's Feedback</h4><p id="feedback-text-5"></p></div>
+    </section>
+
+    <section class="vocabulary">
+      <h2><span class="section-letter">V</span> Vocabulary <span class="vocab-progress-badge" id="vocab-badge-5">0 / 6 words</span></h2>
+      <div class="vocab-grid" id="vocab-grid-5">
+        <div class="vocab-card" data-word="bedroom"><strong>bedroom <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(5, 'bedroom', this)">🔊</button></strong><div class="def">A room for sleeping.</div><div class="example"><strong>Example:</strong> There is one bedroom.</div></div>
+        <div class="vocab-card" data-word="kitchen"><strong>kitchen <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(5, 'kitchen', this)">🔊</button></strong><div class="def">A room for cooking.</div><div class="example"><strong>Example:</strong> The kitchen is small.</div></div>
+        <div class="vocab-card" data-word="window"><strong>window <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(5, 'window', this)">🔊</button></strong><div class="def">An opening in the wall for light and air.</div><div class="example"><strong>Example:</strong> There are two windows.</div></div>
+        <div class="vocab-card" data-word="table"><strong>table <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(5, 'table', this)">🔊</button></strong><div class="def">Furniture with a flat top and legs.</div><div class="example"><strong>Example:</strong> The table is in the kitchen.</div></div>
+        <div class="vocab-card" data-word="plant"><strong>plant <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(5, 'plant', this)">🔊</button></strong><div class="def">A living thing that grows in the ground.</div><div class="example"><strong>Example:</strong> The plants are near the window.</div></div>
+        <div class="vocab-card" data-word="garden"><strong>garden <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(5, 'garden', this)">🔊</button></strong><div class="def">An area with plants and flowers.</div><div class="example"><strong>Example:</strong> There is no garden.</div></div>
+      </div>
+    </section>
+
+    <section class="grammar">
+      <h2><span class="section-letter">G</span> Grammar — There is / There are</h2>
+      <div class="grammar-box">
+        <h4>Explicação (Português)</h4>
+        <p>Usamos para dizer que algo existe.</p>
+        <ul>
+          <li><strong>There is</strong> (Há / Existe) - Usado com substantivos no singular. <em>There is a book.</em></li>
+          <li><strong>There are</strong> (Há / Existem) - Usado com substantivos no plural. <em>There are two books.</em></li>
+          <li><strong>Negativa:</strong> There is not (isn't) / There are not (aren't).</li>
+          <li><strong>Interrogativa:</strong> Is there...? / Are there...?</li>
+        </ul>
+      </div>
+      <div class="questions" id="grammar-questions-5">
+        <div class="question" data-correct="a"><p>1. ___ a cat on the sofa.</p><label><input type="radio" name="q5_1" value="a"> a) There is</label><label><input type="radio" name="q5_1" value="b"> b) There are</label><label><input type="radio" name="q5_1" value="c"> c) It is</label><label><input type="radio" name="q5_1" value="d"> d) They are</label><div class="answer-feedback"></div></div>
+        <div class="question" data-correct="b"><p>2. ___ three apples on the table.</p><label><input type="radio" name="q5_2" value="a"> a) There is</label><label><input type="radio" name="q5_2" value="b"> b) There are</label><label><input type="radio" name="q5_2" value="c"> c) It is</label><label><input type="radio" name="q5_2" value="d"> d) They are</label><div class="answer-feedback"></div></div>
+        <div class="question" data-correct="c"><p>3. ___ a garden in the house?</p><label><input type="radio" name="q5_3" value="a"> a) Are there</label><label><input type="radio" name="q5_3" value="b"> b) Have</label><label><input type="radio" name="q5_3" value="c"> c) Is there</label><label><input type="radio" name="q5_3" value="d"> d) Has</label><div class="answer-feedback"></div></div>
+        <div class="question" data-correct="a"><p>4. ___ any milk in the fridge?</p><label><input type="radio" name="q5_4" value="a"> a) Is there</label><label><input type="radio" name="q5_4" value="b"> b) Are there</label><label><input type="radio" name="q5_4" value="c"> c) It is</label><label><input type="radio" name="q5_4" value="d"> d) They are</label><div class="answer-feedback"></div></div>
+        <div class="question" data-correct="b"><p>5. No, there ___ a TV in my room.</p><label><input type="radio" name="q5_5" value="a"> a) aren't</label><label><input type="radio" name="q5_5" value="b"> b) isn't</label><label><input type="radio" name="q5_5" value="c"> c) not</label><label><input type="radio" name="q5_5" value="d"> d) no</label><div class="answer-feedback"></div></div>
+        <button class="btn" onclick="checkGrammar(5)">Check My Answers</button>
+      </div>
+      <div class="ai-prompt-box">
+        <h4>🤖 Prompt para IA</h4>
+        <pre id="ai-prompt-5">Explain There is / There are in English for a Brazilian student at A1 level. Give me 10 extra exercises with answers.</pre>
+        <button class="btn btn-secondary" onclick="copyPrompt(5)">Copy Prompt</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================== DAY 6 ============================== -->
+  <div id="day-6" class="day-content">
+    <header class="active">
+      <span class="day-badge">Day 6 · A1</span>
+      <h1>Simple Present</h1>
+      <div class="progress-box">
+        <h3>Today's Progress</h3>
+        <div class="progress-items" data-day="6">
+          <div class="progress-item" data-section="listening"><span class="letter">L</span> Listening</div>
+          <div class="progress-item" data-section="reading"><span class="letter">R</span> Reading</div>
+          <div class="progress-item" data-section="writing"><span class="letter">W</span> Writing</div>
+          <div class="progress-item" data-section="vocabulary"><span class="letter">V</span> Vocabulary</div>
+          <div class="progress-item" data-section="grammar"><span class="letter">G</span> Grammar</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="listening">
+      <h2><span class="section-letter">L</span> Listening</h2>
+      <audio controls preload="auto"><source src="https://files.catbox.moe/xkl5ze.mp3" type="audio/mpeg"></audio>
+      <button class="btn btn-secondary btn-script" onclick="toggleScript(6, this)">Show Audio Script</button>
+      <div class="script-box" id="script-6"><strong>Script:</strong> Hi, I am John. I work in an office. I wake up at seven every morning. I eat breakfast at home. I drink coffee and eat bread. I go to work at eight. I start work at nine. I have lunch at noon. I finish work at five. I go home and I cook dinner. I watch TV in the evening. I go to bed at eleven. I sleep eight hours.</div>
+      <div class="questions" id="listening-questions-6">
+        <div class="question"><p>1. What time does John wake up?</p><input type="text" data-answer="seven|7"><div class="answer-feedback"></div></div>
+        <div class="question"><p>2. What does he eat for breakfast?</p><input type="text" data-answer="coffee and bread|bread and coffee"><div class="answer-feedback"></div></div>
+        <div class="question"><p>3. What time does he start work?</p><input type="text" data-answer="nine|9"><div class="answer-feedback"></div></div>
+        <div class="question"><p>4. What does he do after work?</p><input type="text" data-answer="cook dinner|go home|watch tv"><div class="answer-feedback"></div></div>
+        <div class="question"><p>5. What time does he go to bed?</p><input type="text" data-answer="eleven|11"><div class="answer-feedback"></div></div>
+        <button class="btn" onclick="checkTextAnswers('listening-questions-6', 6, 'listening')">Check My Answers</button>
+      </div>
+    </section>
+
+    <section class="reading">
+      <h2><span class="section-letter">R</span> Reading</h2>
+      <div class="reading-text"><p>Hi, I am John. I work in an office. I wake up at seven every morning. I eat breakfast at home. I drink coffee and eat bread. I go to work at eight. I start work at nine. I have lunch at noon. I finish work at five. I go home and I cook dinner. I watch TV in the evening. I go to bed at eleven. I sleep eight hours.</p></div>
+      <div class="questions" id="reading-questions-6">
+        <div class="question"><p>1. Where does John work?</p><input type="text" data-answer="office|in an office"><div class="answer-feedback"></div></div>
+        <div class="question"><p>2. What time does he go to work?</p><input type="text" data-answer="eight|8"><div class="answer-feedback"></div></div>
+        <div class="question"><p>3. What time does he have lunch?</p><input type="text" data-answer="noon|twelve|12"><div class="answer-feedback"></div></div>
+        <div class="question"><p>4. Does he cook dinner?</p><input type="text" data-answer="yes|yes he does"><div class="answer-feedback"></div></div>
+        <div class="question"><p>5. How many hours does he sleep?</p><input type="text" data-answer="eight|8"><div class="answer-feedback"></div></div>
+        <button class="btn" onclick="checkTextAnswers('reading-questions-6', 6, 'reading')">Check My Answers</button>
+      </div>
+    </section>
+
+    <section class="writing">
+      <h2><span class="section-letter">W</span> Writing</h2>
+      <div class="writing-prompt">
+        <strong>Task:</strong> Describe your daily routine. Write 50–70 words. Use the Simple Present.<br><br><em>Do not use AI. Write with your own words.</em>
+      </div>
+      <textarea class="writing-input" id="writing-input-6" placeholder="Start writing here..."></textarea>
+      <div class="word-counter"><span id="word-count-6">0</span> words</div>
+      <button class="btn" id="submit-writing-6" onclick="submitWriting(6)">Submit Writing</button>
+      <div class="submit-status" id="writing-status-6"></div>
+      <div class="teacher-feedback-box" id="feedback-box-6"><h4>👨‍🏫 Teacher's Feedback</h4><p id="feedback-text-6"></p></div>
+    </section>
+
+    <section class="vocabulary">
+      <h2><span class="section-letter">V</span> Vocabulary <span class="vocab-progress-badge" id="vocab-badge-6">0 / 6 words</span></h2>
+      <div class="vocab-grid" id="vocab-grid-6">
+        <div class="vocab-card" data-word="wake up"><strong>wake up <span class="type">(verb)</span><button class="speaker-btn" onclick="speakWord(6, 'wake up', this)">🔊</button></strong><div class="def">To stop sleeping.</div><div class="example"><strong>Example:</strong> I wake up at 7 AM.</div></div>
+        <div class="vocab-card" data-word="breakfast"><strong>breakfast <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(6, 'breakfast', this)">🔊</button></strong><div class="def">The first meal of the day.</div><div class="example"><strong>Example:</strong> I eat breakfast at home.</div></div>
+        <div class="vocab-card" data-word="lunch"><strong>lunch <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(6, 'lunch', this)">🔊</button></strong><div class="def">The meal you eat in the middle of the day.</div><div class="example"><strong>Example:</strong> I have lunch at noon.</div></div>
+        <div class="vocab-card" data-word="dinner"><strong>dinner <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(6, 'dinner', this)">🔊</button></strong><div class="def">The main meal of the day, usually in the evening.</div><div class="example"><strong>Example:</strong> I cook dinner at home.</div></div>
+        <div class="vocab-card" data-word="evening"><strong>evening <span class="type">(noun)</span><button class="speaker-btn" onclick="speakWord(6, 'evening', this)">🔊</button></strong><div class="def">The time between afternoon and night.</div><div class="example"><strong>Example:</strong> I watch TV in the evening.</div></div>
+        <div class="vocab-card" data-word="sleep"><strong>sleep <span class="type">(verb)</span><button class="speaker-btn" onclick="speakWord(6, 'sleep', this)">🔊</button></strong><div class="def">To rest with your eyes closed.</div><div class="example"><strong>Example:</strong> I sleep eight hours.</div></div>
+      </div>
+    </section>
+
+    <section class="grammar">
+      <h2><span class="section-letter">G</span> Grammar — Simple Present</h2>
+      <div class="grammar-box">
+        <h4>Explicação (Português)</h4>
+        <p>Usado para rotinas, hábitos e fatos.</p>
+        <ul>
+          <li>Com <strong>I, You, We, They</strong>, o verbo fica na forma base: <em>I work. They play.</em></li>
+          <li>Com <strong>He, She, It</strong>, adicionamos <code>-s</code>, <code>-es</code> ou <code>-ies</code> ao verbo: <em>He works. She goes. It flies.</em></li>
+        </ul>
+      </div>
+      <div class="questions" id="grammar-questions-6">
+        <div class="question" data-correct="b"><p>1. She ___ coffee every morning.</p><label><input type="radio" name="q6_1" value="a"> a) drink</label><label><input type="radio" name="q6_1" value="b"> b) drinks</label><label><input type="radio" name="q6_1" value="c"> c) drinking</label><label><input type="radio" name="q6_1" value="d"> d) is drink</label><div class="answer-feedback"></div></div>
+        <div class="question" data-correct="a"><p>2. I ___ to work at eight.</p><label><input type="radio" name="q6_2" value="a"> a) go</label><label><input type="radio" name="q6_2" value="b"> b) goes</label><label><input type="radio" name="q6_2" value="c"> c) going</label><label><input type="radio" name="q6_2" value="d"> d) gone</label><div class="answer-feedback"></div></div>
+        <div class="question" data-correct="c"><p>3. They ___ English every day.</p><label><input type="radio" name="q6_3" value="a"> a) studys</label><label><input type="radio" name="q6_3" value="b"> b) studies</label><label><input type="radio" name="q6_3" value="c"> c) study</label><label><input type="radio" name="q6_3" value="d"> d) studying</label><div class="answer-feedback"></div></div>
+        <div class="question" data-correct="a"><p>4. He ___ dinner at 7 PM.</p><label><input type="radio" name="q6_4" value="a"> a) cooks</label><label><input type="radio" name="q6_4" value="b"> b) cook</label><label><input type="radio" name="q6_4" value="c"> c) cooking</label><label><input type="radio" name="q6_4" value="d"> d) is cook</label><div class="answer-feedback"></div></div>
+        <div class="question" data-correct="d"><p>5. We ___ TV in the evening.</p><label><input type="radio" name="q6_5" value="a"> a) watches</label><label><input type="radio" name="q6_5" value="b"> b) watchs</label><label><input type="radio" name="q6_5" value="c"> c) watching</label><label><input type="radio" name="q6_5" value="d"> d) watch</label><div class="answer-feedback"></div></div>
+        <button class="btn" onclick="checkGrammar(6)">Check My Answers</button>
+      </div>
+      <div class="ai-prompt-box">
+        <h4>🤖 Prompt para IA</h4>
+        <pre id="ai-prompt-6">Explain the Simple Present tense in English for a Brazilian student at A1 level. Give me 10 extra exercises with answers.</pre>
+        <button class="btn btn-secondary" onclick="copyPrompt(6)">Copy Prompt</button>
+      </div>
+    </section>
+  </div>
+
   <!-- ============================== RESOURCES ============================== -->
   <section id="resources">
     <h2>🔗 Extra Resources</h2>
@@ -659,14 +807,14 @@
 </div>
 
 <footer class="footer-actions">
-  <p>Vando's English Journey · Days 1-4</p>
+  <p>Vando's English Journey · Days 1-6</p>
   <button class="btn-text" onclick="resetStudent()">Not you? Change student name</button>
 </footer>
 
 <script>
   const FIREBASE_URL = 'https://english-meetings-f08e4-default-rtdb.firebaseio.com';
   const SECTIONS = ['listening', 'reading', 'writing', 'vocabulary', 'grammar'];
-  const DAYS_ACTIVE = [1, 2, 3, 4]; 
+  const DAYS_ACTIVE = [1, 2, 3, 4, 5, 6]; 
   let studentName = localStorage.getItem('studentName') || '';
   
   const state = {}; 
